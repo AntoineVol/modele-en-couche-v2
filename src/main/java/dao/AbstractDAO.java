@@ -26,7 +26,7 @@ public abstract class AbstractDAO<ENTITY> {
 	 * URL de connexion JDBC utilisant les paramètres décrits par MySQL <a href=
 	 * "https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html">ici</a>.
 	 */
-	private final static String CONNECTION_URL = "jdbc:mysql://localhost:3306/blog?useSSL=false&user=root&password=root";
+	private final static String CONNECTION_URL = "jdbc:mysql://localhost:3306/coucheV2?useSSL=false&user=root&password=root";
 
 	/**
 	 * Instance singleton de l'objet de connexion JDBC.
@@ -45,6 +45,7 @@ public abstract class AbstractDAO<ENTITY> {
 				Class.forName("com.mysql.jdbc.Driver");
 				AbstractDAO.CONNECTION = DriverManager
 						.getConnection(CONNECTION_URL);
+				AbstractDAO.CONNECTION.setAutoCommit(false);
 			} catch (SQLException | ClassNotFoundException e) {
 				AbstractDAO.LOGGER.debug(
 						"URL ou driver de connection à la base de données incorrecte : "

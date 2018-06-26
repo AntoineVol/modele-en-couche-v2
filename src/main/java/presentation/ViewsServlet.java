@@ -3,7 +3,6 @@ package presentation;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import model.Client;
 import service.ClientService;
-import service.ClientServiceImpl;
 
 /**
  * Servlet permettant gérer toutes les requêtes HTTP GET se terminant par
@@ -28,10 +26,8 @@ public class ViewsServlet extends AutowiredServlet {
 
 	@Autowired
 	private ClientService service;
+	
 
-//	public ViewsServlet() {
-//		this.service = new ClientServiceImpl();
-//	}
 
 	@Override
 	protected void doGet(HttpServletRequest request,
