@@ -26,13 +26,19 @@ public class ClientServiceImpl implements ClientService {
 		} else if (c.getName() == null) {
 			System.out.println("Merci de saisir un nom");
 		} else {
-			dao.save(c);
+			if (c.getId() != null) {
+				dao.update(c);
+			} else {
+				dao.create(c);
+			}
 		}
 	}
 
 	@Override
 	public Client getValidatedClient(int id) {
-		return dao.findById(id);
+		Client c = new Client();
+		c.setId(id);
+		return dao.read(c);
 	}
 
 	@Override
@@ -42,6 +48,8 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void deleteClient(int id) {
-		dao.delete(id);
+		Client c = new Client();
+		c.setId(id);
+		dao.delete(c);
 	}
 }

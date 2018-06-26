@@ -9,73 +9,59 @@ import java.util.List;
 
 import model.Client;
 
-public class SQLClientDAO extends AbstractDAO implements ClientDAO {
+public class SQLClientDAO extends ClientDAO {
 
-	@Override
-	public void save(Client c) {
-		if (c.getId() >= 0) {
-			// Mise à jour car id rempli.
-			this.update(c);
-		} else {
-			// Création car id non défini.
-			this.create(c);
-		}
-	}
-
-	private void update(Client c) {
+	public Client update(Client client) {
 		Connection cn = null;
 		PreparedStatement st = null;
 		// initialisation du result set
 		try {
-			cn = getConnectionDM();
+			cn = getConnection();
 
 			String sql = "UPDATE client SET name= ? WHERE id=?";
 
 			st = cn.prepareStatement(sql);
 
-			st.setString(1, c.getName());
-			st.setInt(2, c.getId());
+			st.setString(1, client.getName());
+			st.setInt(2, client.getId());
 
 			st.executeUpdate();
 			cn.commit();
-
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close(cn, st, null);
 		}
+		return client;
 	}
 
-	private void create(Client c) {
+	public Client create(Client client) {
 		Connection cn = null;
 		PreparedStatement st = null;
 		// initialisation du result set
 		try {
-			cn = getConnectionDM();
+			cn = getConnection();
 
 			String sql = "INSERT INTO client(nom) VALUES (?)";
 
 			st = cn.prepareStatement(sql);
 
-			st.setString(1, c.getName());
+			st.setString(1, client.getName());
 
 			st.executeUpdate();
 			cn.commit();
-
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close(cn, st, null);
 		}
+		return client;
 	}
 
 	@Override
-	public void delete(int id) {
-
+	public Client delete(Client client) {
+		// TODO: Implements...
+		return client;
 	}
 
 	@Override
-	public Client findById(int id) {
+	public Client read(Client client) {
 		Connection cn = null;
 		PreparedStatement st = null;
 		// initialisation du result set
@@ -83,9 +69,9 @@ public class SQLClientDAO extends AbstractDAO implements ClientDAO {
 		Client cl = new Client();
 
 		try {
-			cn = getConnectionDM();
+			cn = getConnection();
 
-			String sql = "SELECT * FROM client WHERE id =" + id;
+			String sql = "SELECT * FROM client WHERE id =" + client.getId();
 
 			st = cn.prepareStatement(sql);
 
@@ -99,13 +85,9 @@ public class SQLClientDAO extends AbstractDAO implements ClientDAO {
 				cl.setName(rs.getString(2));
 				cl.setId(rs.getInt(1));
 			}
-
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close(cn, st, rs);
 		}
-
 		return cl;
 	}
 
@@ -119,7 +101,7 @@ public class SQLClientDAO extends AbstractDAO implements ClientDAO {
 		ResultSet rs = null;
 
 		try {
-			cn = getConnectionDM();
+			cn = getConnection();
 
 			String sql = "SELECT * FROM client";
 
@@ -137,13 +119,9 @@ public class SQLClientDAO extends AbstractDAO implements ClientDAO {
 				cl.setId(rs.getInt(1));
 				results.add(cl);
 			}
-
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close(cn, st, rs);
 		}
-
 		return results;
 	}
 

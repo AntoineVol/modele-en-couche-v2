@@ -2,7 +2,7 @@ package model;
 
 public class Client {
 
-	private int id;
+	private Integer id;
 
 	private String name;
 
@@ -31,15 +31,14 @@ public class Client {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -51,8 +50,7 @@ public class Client {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
