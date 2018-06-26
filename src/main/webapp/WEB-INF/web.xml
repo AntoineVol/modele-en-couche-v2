@@ -9,9 +9,21 @@
 		<servlet-name>ViewsServlet</servlet-name>
 		<servlet-class>presentation.ViewsServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>ViewsServlet</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
+
+	<context-param>
+		<description>Configuration Spring : indiquer l'emplacement du fichier de configuration spring beans</description>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:///spring-dispatcher-servlet.xml</param-value>
+	</context-param>
+
+	<!-- Bootstrap the root application context as usual using ContextLoaderListener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
 </web-app>

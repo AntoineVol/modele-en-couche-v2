@@ -2,13 +2,18 @@ package service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import dao.ClientDAO;
 import dao.SQLClientDAO;
 import model.Client;
 
 public class ClientServiceImpl implements ClientService {
 
-	private ClientDAO dao = new SQLClientDAO();
+	@Autowired
+	private ClientDAO dao;
+	
+
 
 	/**
 	 * Méthode permettant d'ajouter un client en BDD
