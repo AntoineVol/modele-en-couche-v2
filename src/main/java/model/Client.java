@@ -20,9 +20,13 @@ public class Client {
 	 * @param id
 	 * @param name
 	 */
-	public Client(int id, String name) {
+	public Client(int id,String name) {
 		super();
 		this.id = id;
+		this.name = name;
+	}
+	public Client(String name) {
+		super();
 		this.name = name;
 	}
 

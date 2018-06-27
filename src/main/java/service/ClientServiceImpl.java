@@ -1,55 +1,51 @@
 package service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dao.ClientDAO;
-import dao.SQLClientDAO;
+import dao.ClientRepository;
 import model.Client;
 
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl  implements IClientService{
 
 	@Autowired
-	private ClientDAO dao;
-	
+	private ClientRepository repo;
 
-
-	/**
-	 * Méthode permettant d'ajouter un client en BDD
-	 * 
-	 */
 	@Override
-	public void saveClient(Client c) {
-		if (c.getName().length() < 5) {
-			System.out.println("Le nom doit comporter 5 caractères au minimum");
-		} else if (c.getName() == null) {
-			System.out.println("Merci de saisir un nom");
-		} else {
-			if (c.getId() != null) {
-				dao.update(c);
-			} else {
-				dao.create(c);
-			}
+	public Client createClient(String name) {
+		return this.save(new Client(name));
+	}
+
+	@Override
+	public Client updateClient(Client client) {
+		if(client.getId()==null) {
+			throw new IllegalArgumentException("Cannot update client without id");
 		}
+		return this.save(client);
 	}
 
 	@Override
-	public Client getValidatedClient(int id) {
-		Client c = new Client();
-		c.setId(id);
-		return dao.read(c);
+	public Client findClientByID(int id) {
+		Client clt = new Client();
+		Optional<Client> Oclt = this.repo.findById(id);
+		if(Oclt.isPresent()) {
+			clt.setId(Oclt.get().getId());
+			clt.setName(Oclt.get().getName());
+		}
+		return clt;
 	}
-
-	@Override
-	public List<Client> getAllClient() {
-		return dao.findAll();
-	}
-
-	@Override
 	public void deleteClient(int id) {
-		Client c = new Client();
-		c.setId(id);
-		dao.delete(c);
+		this.repo.deleteById(id);
 	}
+	@Override
+	public List<Client> findAllClient() {
+		return this.repo.findAll();
+	}
+	
+	private Client save(Client client) {
+		return this.repo.save(client);
+	}
+	
 }

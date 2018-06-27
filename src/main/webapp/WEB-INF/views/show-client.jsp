@@ -13,5 +13,6 @@
 	<h3>Nom : ${client.name}</h3>
 	<c:url value="/edit-client.html?clientId=${client.id}" var="editUrl" />
 	<button onclick="window.document.location.href='${editUrl}'">Modifier</button>
+
 </body>
 </html>

@@ -15,5 +15,6 @@
 			<a href="<c:url value="/show-all.html" />">Liste des clients</a>
 		</li>
 	</ul>
+
 </body>
 </html>
